@@ -147,7 +147,6 @@ def main():
         ofb_ctl.offboard_set_mode()
         rate.sleep()
     print ("OFFBOARD mode activated")
-    rospy.set_param('COM_RCL_EXCEPT', 4)
 
     # Publish the setpoints 
     while not rospy.is_shutdown():   
@@ -157,11 +156,43 @@ def main():
         # Step 4: Once the drone reaches the setpoint, publish the next setpoint , repeat the process until all the setpoints are done  
         # Step 5: Once all the setpoints are done, land the drone
         # Step 6: Check if the drone has landed by checking the topic /mavros/local_position/pose
-
-
-        
         local_vel_pub.publish(vel)
+        local_pos_pub.publish(setpoints[0])
         rate.sleep()
+        while not stateMt.local_pos.pose.position.z>=10:
+            rate.sleep()
+
+        local_vel_pub.publish(vel)
+        local_pos_pub.publish(setpoints[1])
+        rate.sleep()
+        while not stateMt.local_pos.pose.position.z>=10:
+            rate.sleep()
+
+        local_vel_pub.publish(vel)
+        local_pos_pub.publish(setpoints[2])
+        rate.sleep()
+        while not stateMt.local_pos.pose.position.z>=10:
+            rate.sleep()
+
+        local_vel_pub.publish(vel)
+        local_pos_pub.publish(setpoints[3])
+        rate.sleep()
+        while not stateMt.local_pos.pose.position.z>=10:
+            rate.sleep()
+
+        local_vel_pub.publish(vel)
+        local_pos_pub.publish(setpoints[4])
+        rate.sleep()
+        while not stateMt.local_pos.pose.position.z>=10:
+            rate.sleep()
+
+        local_vel_pub.publish(vel)
+        local_pos_pub.publish(setpoints[0])
+        rate.sleep()
+        while not stateMt.local_pos.pose.position.z>=10:
+            rate.sleep()
+        break
+
 
 if __name__ == '__main__':
     try:
